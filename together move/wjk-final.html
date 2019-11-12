@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="天地图"/>
+    <title>天地图－地图API－两个地图联动</title>
+    <style type="text/css">
+        body, html {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+        #map1_container,#map2_container {width:100%;height:50%;float:left;overflow: hidden;margin:0;}
+    </style>
+    <script type="text/javascript" src="http://api.tianditu.gov.cn/api?v=4.0&tk=fb9da9f0eb83681a741c59f5a1e33975"></script>
+    <script>
+		//注：同一页面创建多个地图时必须为同一投影
+        var map1,map2;
+        var zoom = 14;
+        var mylatlng = new T.LngLat(121.473704,31.230393);
+        //检测HTML5 geolocation的支持与否
+        function supportGeo(){
+        	if(navigator.geolocation){
+        		alert("your browser support HTML5 geolocation");
+        		getLocation();  
+        	}else{
+        		alert("your browser does not support HTML5 geolocation");
+        	}
+        }
+        //初始化地图
+        function onLoad() {
+            var config1={
+			    zoom:14,
+		        center:mylatlng
+		    };
+            map1 = new T.Map('map1_container',config1);
+            // map1.centerAndZoom(new T.LngLat(121.473704,31.230393), zoom);
+            
+            var imageURL = 'http://t0.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=fb9da9f0eb83681a741c59f5a1e33975';
+        	//创建自定义图层对象
+        	var lay = new T.TileLayer(imageURL, config1);
+            var config2={
+			    zoom:14,
+		        center:mylatlng,
+		        layers: [lay]
+		    };
+            map2 = new T.Map('map2_container', config2);
+            // map2.centerAndZoom(new T.LngLat(121.473704,31.230393), zoom);
+
+            map1.addEventListener("mousemove", map1Move);
+            map2.addEventListener("mousemove", map2Move);//添加监听事件
+        }
+
+        function map1Move(e){
+		var lng = e.target.getCenter().getLng();
+		var lat = e.target.getCenter().getLat();
+		map2.removeEventListener("mousemove", map1Move);
+		map2.panTo(new T.LngLat(lng, lat), map1.getZoom());//通过对map1的监听 对map2执行与map1相同事件
+		map2.addEventListener("mousemove", map1Move);
+        }
+
+        function map2Move(e){
+		lng = e.target.getCenter().getLng();
+		lat = e.target.getCenter().getLat();
+		map1.removeEventListener("mousemove", map2Move);
+		map1.panTo(new T.LngLat(lng, lat), map2.getZoom());
+		map1.addEventListener("mousemove", map2Move);
+        }
+
+    </script>
+</head>
+<body onLoad="onLoad()">
+<div id="map1_container" ></div>
+<div id="map2_container"></div>
+
+</body>
+</html>

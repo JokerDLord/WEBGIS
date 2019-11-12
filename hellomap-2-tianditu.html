@@ -1,0 +1,130 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>hellomap</title>
+</head>
+
+<body>
+    <table align="center">
+        <tr>
+            <td>
+                <table width="100%">
+                    <tr>
+                        <td style="font:bold 28px">地图,你好(HelloMap.html)</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%">
+                    <tr>
+                        <td><input type="radio" name="mapTool" value="ZoomAll" checked="CHECKED">全图</td>
+                        <td><input type="radio" name="mapTool" value="ZoomIn">放大</td>
+                        <td><input type="radio" name="mapTool" value="ZoomOut">缩小</td>
+                        <td><input type="radio" name="mapTool" value="Pan">漫游</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%">
+                    <tr>
+                        <td><input type="image" id="mapimg" 
+                            src="http://api.tianditu.gov.cn/staticimage?center=121.46902,31.23224&width=500&height=400&zoom=10&tk=a4119bbf3bc7ceb076fd0c3f2efaa52f" onclick="zoomMap(event)"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right">2019年9月 于闵行校区</td>
+        </tr>
+    </table>
+
+    <script>
+        var addr, mapImg, mt;
+        var jsmap = {}; //json？格式
+        jsmap.maplevel = 10;
+        jsmap.centerX = 121.46902;
+        jsmap.centerY = 31.23224;
+
+        var reqParams = "";
+
+        function init() {
+            addr = "http://api.tianditu.gov.cn/staticimage?";
+            mapImg = document.getElementById("mapimg"); //通过name获取对象 任何标签都可通过类似方式获得
+            mt = document.getElementsByName("mapTool"); //通过文档要素的名字获得
+            requestmap("center="+jsmap.centerX+","+jsmap.centerY+"&width=500&height=500&tk=a4119bbf3bc7ceb076fd0c3f2efaa52f");
+        }
+        //根据按钮的点击情况决定执行时间函数
+        function zoomMap(evt) {
+            if (mt[1].checked) {
+                zoomIn(evt);
+            } else if (mt[2].checked) {
+                zoomOut(evt);
+            } else if (mt[3].checked) {
+                panMap(evt);
+            } else {
+                zoomAll();
+            }
+            //如果想要在此处改变center需要联系到屏幕坐标和地图坐标的关系 坐标变换 
+            //屏幕坐标左上角是00 
+            //通过offsetX offsetY计算出经纬度的坐标
+        }
+
+        function zoomIn(evt) {
+            Screentomap(evt.offsetX,evt.offsetY);
+            alert(jsmap.centerX+","+jsmap.centerY); //该语句可自行删除
+            jsmap.maplevel = jsmap.maplevel + 1;
+            var reqParams =  "&center=" + jsmap.centerX + "," + jsmap.centerY + "&zoom=" + jsmap.maplevel + "&width=500&height=500&tk=a4119bbf3bc7ceb076fd0c3f2efaa52f";
+            requestmap(reqParams);
+        }
+
+        function zoomOut(evt) {
+            Screentomap(evt.offsetX,evt.offsetY);
+            alert(jsmap.centerX+","+jsmap.centerY);
+            jsmap.maplevel = jsmap.maplevel - 1;
+            var reqParams =  "&center=" + jsmap.centerX + "," + jsmap.centerY + "&zoom=" + jsmap.maplevel + "&width=500&height=500&tk=a4119bbf3bc7ceb076fd0c3f2efaa52f";
+            requestmap(reqParams);
+        }
+
+        function panMap(evt) {
+            Screentomap(evt.offsetX,evt.offsetY);
+            alert(jsmap.centerX+","+jsmap.centerY);
+            var newZoom = jsmap.maplevel;
+            var reqParams =  "&center=" + jsmap.centerX + "," + jsmap.centerY + "&zoom=" + jsmap.maplevel + "&width=500&height=500&tk=a4119bbf3bc7ceb076fd0c3f2efaa52f";
+            requestmap(reqParams);
+        }
+
+        function zoomAll() {
+            var reqParams =  "&center=" + jsmap.centerX + "," + jsmap.centerY + "&zoom=" + jsmap.maplevel + "&width=500&height=500&tk=a4119bbf3bc7ceb076fd0c3f2efaa52f";
+            requestmap(reqParams);
+        }
+
+        //
+        function requestmap(params) {
+            addr = "http://api.tianditu.gov.cn/staticimage?";
+            var url = addr + params;
+            //alert(url);
+            document.getElementById('mapimg').src = url;
+        }
+
+        //jsmap.mapZoom = mapimg.width / Math.pow(2, zoomLevel) * 1.4;
+        function Screentomap(sx,sy){ //transfer screen points to world(map) point
+            //根据比例关系 设实际与屏幕缩放比为scale 显然scale = jsmap.mapZoom / mapimg.width = 1 / Math.pow(2, zoomLevel) * 1.4
+            //由于比例关系 计算点击点地图上的实际坐标wx wy 根据比例关系如下 
+            //(wx - jsmap.centerX)/(sx - 250) = scale; (jsmap.centerY - wy)/(sy - 250) = scale;
+            //其中250是中心点的屏幕坐标 与y轴计算的分子相反是因为 屏幕坐标y轴向下为正 地图坐标y轴向上为正
+            var wx = ((sx - 250) / Math.pow(2, jsmap.maplevel) * 1.4)  + jsmap.centerX;
+            var wy = jsmap.centerY - ((sy - 250)/ Math.pow(2, jsmap.maplevel) * 1.4);
+            jsmap.centerX = wx;
+            jsmap.centerY = wy;
+        }
+        //
+        window.onload = init();
+    </script>
+</body>
+
+</html>

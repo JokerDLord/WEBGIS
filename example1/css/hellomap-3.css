@@ -1,0 +1,9 @@
+table {
+    text-align: center;
+ }
+ td {
+    background-color:lightblue;
+    text-align: center;
+    font: normal 14px "宋体";
+    height: 24px;
+}
