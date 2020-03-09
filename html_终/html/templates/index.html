@@ -1,0 +1,138 @@
+<!-- <!doctype html> -->
+<html>
+<head>
+<meta charset="utf-8">
+<title>上海市电影院用户个性化查询系统</title>
+<link rel="stylesheet" type="text/css" href="../static/content/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="../static/content/main.css" />
+<script type="text/javascript" src="/static/scripts/main.js"></script>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<!--这里是jQ-->
+<script type="text/javascript" src="/static/scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="http://api.tianditu.gov.cn/api?v=4.0&tk=a4119bbf3bc7ceb076fd0c3f2efaa52f"></script>
+<script>
+	// function loadXMLDoc()
+	// {
+	// 	var xmlhttp;
+	// 	if (window.XMLHttpRequest)
+	// 	{
+	// 		// IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+	// 		xmlhttp=new XMLHttpRequest();
+	// 	}
+	// 	else
+	// 	{
+	// 		// IE6, IE5 浏览器执行代码
+	// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	// 	}
+	// 	xmlhttp.onreadystatechange=function()
+	// 	{
+	// 		// 注意： onreadystatechange 事件被触发 4 次（0 - 4）, 分别是： 0-1、1-2、2-3、3-4，对应着 readyState 的每个变化。
+	// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	// 		{
+	// 			// document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+	// 			document.getElementById("myDiv").innerHTML="readystate="+xmlhttp.readyState;
+	// 		}
+	// 	}
+	// 	xmlhttp.open("POST",url,async);//url：文件在服务器上的位置 如Flask?
+	// 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	// 	// setRequestHeader(header,value)
+	// 	// 向请求添加 HTTP 头。
+	// 	// header: 规定头的名称
+	// 	// value: 规定头的值
+	// 	xmlhttp.send("no wifi");
+	// }
+</script>
+<style type="text/css"></style>
+</head>
+
+<body onLoad="onLoad()">
+<div id="map" class="middle">
+
+
+
+<div id="searchdiv">
+<form method='get' id="query">
+	<span class="cnstyle1">人均价格</span>
+	<span class="cnstyle2">最低价</span>
+		<input name='lowPrice' id='lowPrice' type='text' class='textstyle'>
+	<span class="cnstyle2">—</span>
+	<span class="cnstyle2">最高价</span>
+		<input name="highPrice" id='highPrice' type='text' class='textstyle'><br>
+
+	<span class="cnstyle1">便利设施</span>
+	<span class='cnstyle2'>WiFi</span>
+	<input name='wifi' id='checkbox-1' type='checkbox' style="display: none;"/>
+	<label for='checkbox-1'></label>
+	<span class='cnstyle2'>停车场</span>
+	<input name='park' id='checkbox-2' type='checkbox' style="display: none;"/>
+	<label for='checkbox-2'></label>
+	<span class='cnstyle2'>3D眼镜</span>
+	<input name='glasses' id='checkbox-3' type='checkbox' style="display: none;"/>
+	<label for='checkbox-3'></label><br>
+	<!--我怕搞了彩色的复选框没法正常get，上述代码见https://blog.csdn.net/csdn_xuexiaoqiang/article/details/53502529-->
+	<span class="cnstyle1">影院星级</span>
+	<span class='cnstyle2'>五星</span>
+	<input name='rank5' id='checkbox-4' type='checkbox' style="display: none;"/>
+	<label for='checkbox-4'></label>
+	<span class='cnstyle2'>四星半</span>
+	<input name='rank45' id='checkbox-5' type='checkbox' style="display: none;"/>
+	<label for='checkbox-5'></label>
+	<span class='cnstyle2'>四星</span>
+	<input name='rank4' id='checkbox-6' type='checkbox' style="display: none;"/>
+	<label for='checkbox-6'></label><br />
+
+	<span class="cnstyle1">搜索范围</span>
+	<select class="form_select" id='adname' name = "adname">
+		<option value='adname'>所有区</option>
+		<option value="'黄浦区'">黄浦区</option>
+		<option value="'徐汇区'">徐汇区</option>
+		<option value="'长宁区'">长宁区</option>
+		<option value="'静安区'">静安区</option>
+		<option value="'普陀区'">普陀区</option>
+		<option value="'虹口区'">虹口区</option>
+		<option value="'杨浦区'">杨浦区</option>
+		<option value="'闵行区'">闵行区</option>
+		<option value="'宝山区'">宝山区</option>
+		<option value="'嘉定区'">嘉定区</option>
+		<option value="'浦东新区'">浦东新区</option>
+		<option value="'金山区'">金山区</option>
+		<option value="'松江区'">松江区</option>
+		<option value="'青浦区'">青浦区</option>
+		<option value="'奉贤区'">奉贤区</option>
+		<option value="'崇明区'">崇明区</option>
+	</select> 
+	<!--有bug，按钮没法在下一行显示，用br没用-->
+	<!-- 要修复这个bug 请把两个按钮移动到form外面 -->
+	<input class='pressbtn1' id='search' onclick="showQueryData();" value='查询'/>
+	<input class='pressbtn2' id='clear' onclick='clearQueryData();' value='清除'/>
+	<input class='pressbtn3' id='favor' onclick='showfavor();' value='显示收藏'/>
+</form>
+	
+</div>
+
+<div class="hover" id="results" style="display: none;">
+	<div id="resultContents" class="container">
+		<!-- bootStrap的对齐系统，需要外面的div的class是container
+			里面再通过JS 产生搜索结果 -->
+
+	</div>
+	<div id="turnPage">
+		<!-- 显示一共多少页 -->
+		<input type="button" class="btn btn-default" value="<" onClick="turnPage(-1)"/>
+		<span class="cnstyle2"> 第 
+			<span id="currPage"></span> 页,&nbsp;共
+			<span id="totalPages"></span> 页</span> &nbsp;&nbsp;
+		<input type="button" class="btn btn-default" value=">" onClick="turnPage(1)" />
+
+	</div>
+</div>
+
+<div id='movieshow' class="scroll container">
+	<div id="movieposter" class="row"></div>
+</div>
+
+
+
+</div>
+</body>
+</html>

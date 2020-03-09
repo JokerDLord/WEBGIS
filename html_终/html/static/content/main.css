@@ -1,0 +1,259 @@
+﻿html,body {background-color:#FFF;
+			   height:100%;
+			   width:100%;
+			   margin:0px;
+			   padding:0px;
+	}
+	div {
+		margin:0;
+		padding:0;
+		border:0;
+	}
+	input[type="checkbox"] + label {
+	    cursor: pointer;
+	    font-size: 1em;
+	}
+	[id^="checkbox-"] + label {
+	    background-color: #ffffff;
+	    border: 2px solid #c0c0c0;
+	    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+	    padding: 8px;
+	    border-radius: 4px;
+	    display: inline-block; /*是行内元素*/
+	    vertical-align: middle;
+	}
+	[id^="checkbox-"] + label:active {
+	    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+	}
+	[id="checkbox-1"]:checked + label {
+	    background-color: #F47164;
+	    border: 1px solid #F47164;
+	}
+	[id="checkbox-2"]:checked + label {
+	    background-color: #84CBC5;
+	    border: 1px solid #84CBC5;
+	}
+	[id="checkbox-3"]:checked + label {
+	    background-color: #F8D25D;
+	    border: 1px solid #F8D25D;
+	}
+	[id="checkbox-4"]:checked + label {
+	    background-color: #9ACD32;
+	    border: 1px solid #9ACD32;
+	}
+	[id="checkbox-5"]:checked + label {
+	    background-color: #B0C4DE;
+	    border: 1px solid #B0C4DE;
+	}
+	[id="checkbox-6"]:checked + label {
+	    background-color: #CD853F;
+	    border: 1px solid #CD853F;
+	}
+
+	
+	.middle {
+		overflow:hidden;
+		background:#FFFFF0;
+		width:100%;
+		height:100%;
+	}
+	#searchdiv {
+		overflow:hidden;
+		z-index:9999;
+		position:absolute;
+		margin-top:10px;
+		margin-left:10px;
+		background:#FFF;
+		width:25%;
+		height: 24%;
+		padding:8px;
+		background-color: #ffffff;
+	    border: 2px solid #dcdcdc;
+	    box-shadow: 0px 0px 10px 5px #dddddd inset;
+	    border-radius: 8px;
+	}
+	#movieshow {
+		z-index:9999;
+		float:right;
+		margin-top:10px;
+		margin-right:10px;
+		background:#FFF;
+		width:15%;
+		padding:8px;
+		background-color: #ffffff;
+	    border: 2px solid #dcdcdc;
+	    box-shadow: 0px 0px 10px 5px #dddddd inset;
+	    border-radius: 8px;
+	}
+	.textstyle {
+		background-color: #ffffff;
+	    border: 2px solid #c0c0c0;
+		height:20px;
+		width:40px;
+		border-radius: 5px;
+		vertical-align: middle;/*字体和复选框的中心线对齐 */
+	}
+	.cnstyle1 {
+		/*怎么才能把字体和复选框的中心线对齐？*/
+		margin-left:10px;
+		margin-right:10px;
+		font-family: 微软雅黑;
+		font-size:20px;
+		vertical-align: middle;
+	}
+	.cnstyle2 {
+		/*怎么才能把字体和复选框的中心线对齐？*/
+		margin-left:10px;
+		margin-right:0px;
+		font-family: 微软雅黑;
+		font-size:18px;
+		vertical-align: middle;
+	}
+	.pressbtn1 {
+		margin-left:10px;
+		font-family: 微软雅黑;
+		width: 100px; 
+		height: 35px; 
+		border-width: 0px; /* 边框宽度 */
+		border-radius: 3px; /* 边框半径 */
+		background: #1E90FF; /* 背景颜色 */
+		cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+		text-align: center; /* 文字居中 */
+		outline: none; /* 不显示轮廓线 */
+		color: white; /* 字体颜色 */
+		font-size: 17px; /* 字体大小 */
+	}
+	.pressbtn2 {
+		margin-left:0px;
+		font-family: 微软雅黑;
+		width: 100px; 
+		height: 35px; 
+		border-width: 0px; /* 边框宽度 */
+		border-radius: 3px; /* 边框半径 */
+		background: #1E90FF; /* 背景颜色 */
+		cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+		text-align: center; /* 文字居中 */
+		outline: none; /* 不显示轮廓线 */
+		color: white; /* 字体颜色 */
+		font-size: 17px; /* 字体大小 */
+	}
+	.pressbtn3 {
+		margin-left:0px;
+		font-family: 微软雅黑;
+		width: 100px; 
+		height: 35px; 
+		border-width: 0px; /* 边框宽度 */
+		border-radius: 3px; /* 边框半径 */
+		background: #1E90FF; /* 背景颜色 */
+		cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+		text-align: center; /* 文字居中 */
+		outline: none; /* 不显示轮廓线 */
+		color: white; /* 字体颜色 */
+		font-size: 17px; /* 字体大小 */
+	}
+	.form_select{
+		height: 25px;
+		width: 200px;
+		background-color: #ffffff;
+	    border: 2px solid #c0c0c0;
+	    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+	    border-radius: 4px;
+	    display: inline-block; /*是行内元素*/
+	    vertical-align: middle;
+		 /* float: left; */
+		margin-left:10px;
+		background:url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
+		background-position:right;
+		background-repeat: no-repeat;
+		/* 鼠标触碰光标变手势 */
+		cursor: pointer;
+		/* 清除默认样式 */
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+
+	}
+
+	.hover {
+		overflow:hidden;
+		z-index:9999;
+		position:absolute;
+		margin-top:10px;
+		margin-left:10px;
+		background:#FFF;
+		width:25%;
+		padding:10px;
+		background-color: #ffffff;
+	    border:0px;
+	    box-shadow: 10px 10px 20px rgba(0,0,0.5,0.5);
+	    border-radius: 10px;
+                   background-color: #ffffff;
+	    border: 2px solid #dcdcdc;
+	    box-shadow: 0px 0px 10px 5px #dddddd inset;
+	    border-radius: 8px;
+	    top: 25%;
+		height: 65%;
+	}
+
+	#movieshow {
+		overflow:auto;
+		display: none;
+		z-index:9999;
+		position:absolute;
+		margin-top:10px;
+		margin-left:10px;
+		background:#FFF;
+		width:25%;
+		padding:10px;
+		background-color: #ffffff;
+	    border:0px;
+	    box-shadow: 10px 10px 20px rgba(0,0,0.5,0.5);
+	    border-radius: 10px;
+                   background-color: #ffffff;
+	    border: 2px solid #dcdcdc;
+	    box-shadow: 0px 0px 10px 5px #dddddd inset;
+	    border-radius: 8px;
+	    top: 1%;
+	    left: 85%;
+	    width: 14%;
+		height: 65%;
+	}
+
+	/* 好看的滚动条 来源: https://www.jianshu.com/p/c2addb233acd*/
+	.scroll::-webkit-scrollbar {
+	  /*滚动条整体样式*/
+	  width : 10px;  /*高宽分别对应横竖滚动条的尺寸*/
+	  height: 1px;
+	  }
+	  .scroll::-webkit-scrollbar-thumb {
+	  /*滚动条里面小方块*/
+	  border-radius: 10px;
+	  box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+	  background   : #535353;
+	  }
+	  .scroll::-webkit-scrollbar-track {
+	  /*滚动条里面轨道*/
+	  box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+	  border-radius: 10px;
+	  background   : #ededed;
+	  }
+
+	hr {
+		margin-bottom: 5px;
+		margin-top: 5px;
+		background-color: #39F6CC;
+		height: 1px;
+	}
+
+	/* 显示出5颗星的CSS 进行了一些（颜色）修改 https://www.cnblogs.com/sxs161028/p/7249966.html*/
+	.cleanfloat::after{display: block; clear: both; content:""; visibility: hidden; height: 0;} 
+    .starFive span {float: left;font-size: 15px; font-family: 'SimHei';
+        text-align: center;color: #BBB;width: 15px;
+        margin-right: 0px;position: relative;overflow: hidden;white-space: pre;
+     }
+    .starFive span:before {position: absolute;
+        left: 0;top: 0;display: block;width: 50%;
+        content: attr(data-content);overflow: hidden;color: #FA2;
+    }
+    .sF span:before{width: 50%;}
+    .starFive .org_star {color: #FA2;}
